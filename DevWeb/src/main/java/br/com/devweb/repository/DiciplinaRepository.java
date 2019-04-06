@@ -1,8 +1,13 @@
 package br.com.devweb.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import br.com.devweb.models.Admin;
+import java.util.List;
 
-public interface DiciplinaRepository extends JpaRepository<Admin, Integer>{
+import org.springframework.data.repository.CrudRepository;
 
+import br.com.devweb.models.Diciplina;
+
+public interface DiciplinaRepository extends CrudRepository<Diciplina, Integer>{
+
+	List<Diciplina> findAll();
+	Diciplina findById(int id);
 }
