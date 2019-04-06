@@ -29,10 +29,10 @@ public class Professor {
 	private boolean isProfessorResponsavel;
 	
 	@ManyToMany
-	@JoinTable(name="Professor_Diciplina", 
+	@JoinTable(name="Professor_Disciplina", 
 		joinColumns={@JoinColumn(name="professor_id")}, 
-		inverseJoinColumns={@JoinColumn(name="diciplina_id")})
-	private List<Diciplina> diciplinas;
+		inverseJoinColumns={@JoinColumn(name="disciplina_id")})
+	private List<Disciplina> diciplinas;
 	
 	public Integer getId() {
 		return id;

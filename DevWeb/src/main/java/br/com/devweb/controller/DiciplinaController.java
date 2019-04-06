@@ -12,34 +12,34 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.devweb.models.Diciplina;
-import br.com.devweb.repository.DiciplinaRepository;
+import br.com.devweb.models.Disciplina;
+import br.com.devweb.repository.DisciplinaRepository;
 
 @RestController
-@RequestMapping("/api/diciplina")
+@RequestMapping("/api/disciplina")
 public class DiciplinaController {
 
 	@Autowired
-	private DiciplinaRepository diciplinaRepository;
+	private DisciplinaRepository disciplinaRepository;
 	
 	@GetMapping("/getAll")
-	public ResponseEntity<List<Diciplina>> getAll(){
-		List<Diciplina> diciplina = diciplinaRepository.findAll();
+	public ResponseEntity<List<Disciplina>> getAll(){
+		List<Disciplina> diciplina = disciplinaRepository.findAll();
 		
 		return diciplina!=null ? ResponseEntity.ok(diciplina): ResponseEntity.noContent().build();
 	}
 	
 	@GetMapping("/getOne/{id}")
-	public ResponseEntity<Diciplina> getOne(@PathVariable("id") int id){
-		Diciplina diciplina = diciplinaRepository.findById(id);
+	public ResponseEntity<Disciplina> getOne(@PathVariable("id") int id){
+		Disciplina diciplina = disciplinaRepository.findById(id);
 		return diciplina!=null?ResponseEntity.ok(diciplina):ResponseEntity.noContent().build();
 	}
 	
 	@PostMapping
-	public ResponseEntity<Diciplina> save(@RequestBody Diciplina diciplina){
-		long cont = diciplinaRepository.count();
-		diciplinaRepository.save(diciplina);
-		if(cont<diciplinaRepository.count()) {
+	public ResponseEntity<Disciplina> save(@RequestBody Disciplina diciplina){
+		long cont = disciplinaRepository.count();
+		disciplinaRepository.save(diciplina);
+		if(cont<disciplinaRepository.count()) {
 			return ResponseEntity.ok(diciplina);
 		}else {
 			return ResponseEntity.noContent().build();
@@ -47,9 +47,9 @@ public class DiciplinaController {
 	}
 	
 	@DeleteMapping("delete/{id}")
-	public ResponseEntity<Diciplina> delete(@PathVariable("id") int id){
-		diciplinaRepository.deleteById(id);
-		Diciplina diciplina = diciplinaRepository.findById(id);
+	public ResponseEntity<Disciplina> delete(@PathVariable("id") int id){
+		disciplinaRepository.deleteById(id);
+		Disciplina diciplina = disciplinaRepository.findById(id);
 		return diciplina==null? ResponseEntity.ok(diciplina) : ResponseEntity.noContent().build();
 	}
 }

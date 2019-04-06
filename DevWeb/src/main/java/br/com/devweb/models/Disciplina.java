@@ -11,7 +11,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 
 @Entity
-public class Diciplina {
+public class Disciplina {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private Integer id;
