@@ -1,2 +1,0 @@
-INDEX VERSION 1.131+C:\DevWeb\DevWeb.API\.metadata\.plugins\org.eclipse.jdt.core
-546550809.index
