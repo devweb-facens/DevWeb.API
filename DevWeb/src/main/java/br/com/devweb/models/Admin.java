@@ -22,19 +22,7 @@ public class Admin
 	@Column(name="Telefone",length=20, nullable=false)
 	private String telefone;
 	
-	public Admin()
-	{
-		
-	}
 	
-	
-	
-	public Admin(String nome, String email, String senha, String telefone) {
-		this.nome = nome;
-		this.email = email;
-		this.senha = senha;
-		this.telefone = telefone;
-	}
 
 	public Integer getId() {
 		return id;

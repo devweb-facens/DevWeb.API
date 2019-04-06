@@ -1,10 +1,8 @@
 package br.com.devweb.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,28 +23,34 @@ public class AdminController {
 	private AdminRepository adminRepository;
 	
 	@GetMapping("/getAll")
-	public List<Admin> getAll(){	
-		return adminRepository.findAll();
+	public ResponseEntity<List<Admin>> getAll(){
+		List<Admin> admin = adminRepository.findAll();
+		
+		return admin!=null ? ResponseEntity.ok(admin): ResponseEntity.noContent().build();
 	}
 	
 	@GetMapping("/getOne/{id}")
-	public Optional<Admin> getOne(@PathVariable("id") int id){
-		return adminRepository.findById(id);
+	public ResponseEntity<Admin> getOne(@PathVariable("id") int id){
+		Admin admin = adminRepository.findById(id);
+		return admin!=null?ResponseEntity.ok(admin):ResponseEntity.noContent().build();
 	}
 	
-	@PostMapping()
-	public ResponseEntity<Object> save(@RequestBody Admin admin){
-		return new ResponseEntity<>(adminRepository.save(admin), HttpStatus.OK);
-	}
-	
-	@DeleteMapping("/delete/{id}")
-	public HttpStatus delete(@PathVariable("id") int id){
-		Optional<Admin> admin = adminRepository.findById(id);
-		if(admin!=null) {
-			adminRepository.deleteById(id);
-			return HttpStatus.OK;
+	@PostMapping
+	public ResponseEntity<Admin> save(@RequestBody Admin admin){
+		long cont = adminRepository.count();
+		adminRepository.save(admin);
+		if(cont<adminRepository.count()) {
+			return ResponseEntity.ok(admin);
 		}else {
-			return HttpStatus.INTERNAL_SERVER_ERROR;
+			return ResponseEntity.noContent().build();
 		}
 	}
+	
+	@DeleteMapping("delete/{id}")
+	public ResponseEntity<Admin> delete(@PathVariable("id") int id){
+		adminRepository.deleteById(id);
+		Admin admin = adminRepository.findById(id);
+		return admin==null? ResponseEntity.ok(admin) : ResponseEntity.noContent().build();
+	}
+	
 }
