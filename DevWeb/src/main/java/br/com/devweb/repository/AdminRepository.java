@@ -1,8 +1,14 @@
 package br.com.devweb.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
+
+import org.springframework.data.repository.CrudRepository;
+
 import br.com.devweb.models.Admin;
 
-public interface AdminRepository extends JpaRepository<Admin, Integer>{
+public interface AdminRepository extends CrudRepository<Admin, Integer>{
 
+	List<Admin> findAll();
+	Admin findById(int id);
 }
