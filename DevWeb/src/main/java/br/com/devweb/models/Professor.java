@@ -32,7 +32,7 @@ public class Professor {
 	@JoinTable(name="Professor_Disciplina", 
 		joinColumns={@JoinColumn(name="professor_id")}, 
 		inverseJoinColumns={@JoinColumn(name="disciplina_id")})
-	private List<Disciplina> diciplinas;
+	private List<Disciplina> disciplinas;
 	
 	public Integer getId() {
 		return id;
@@ -70,10 +70,12 @@ public class Professor {
 	public void setProfessorResponsavel(boolean isProfessorResponsavel) {
 		this.isProfessorResponsavel = isProfessorResponsavel;
 	}
-	
-	//@ManyToMany
-	//private List<Diciplina> diciplinas;
-	
+	public List<Disciplina> getDisciplinas() {
+		return disciplinas;
+	}
+	public void setDisciplinas(List<Disciplina> disciplinas) {
+		this.disciplinas = disciplinas;
+	}	
 	
 	
 }

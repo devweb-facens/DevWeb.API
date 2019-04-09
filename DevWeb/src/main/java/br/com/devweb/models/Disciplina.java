@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 
@@ -20,8 +22,14 @@ public class Disciplina {
 	@OneToOne
 	private Professor professorResponsavel;
 	
-	@ManyToMany(mappedBy="diciplinas")
+	@ManyToMany(mappedBy="disciplinas")
 	private List<Professor> professores;
+	
+	@ManyToMany
+	@JoinTable(name="Curso_Disciplina", 
+	joinColumns={@JoinColumn(name="disciplina_id")}, 
+	inverseJoinColumns={@JoinColumn(name="curso_id")})
+	private List<Curso> cursos;
 
 	public Integer getId() {
 		return id;
@@ -45,6 +53,22 @@ public class Disciplina {
 
 	public void setProfessorResponsavel(Professor professorResponsavel) {
 		this.professorResponsavel = professorResponsavel;
+	}
+
+	public List<Professor> getProfessores() {
+		return professores;
+	}
+
+	public void setProfessores(List<Professor> professores) {
+		this.professores = professores;
+	}
+
+	public List<Curso> getCursos() {
+		return cursos;
+	}
+
+	public void setCursos(List<Curso> cursos) {
+		this.cursos = cursos;
 	}
 	
 	
