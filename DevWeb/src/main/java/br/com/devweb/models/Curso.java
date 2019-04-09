@@ -3,6 +3,7 @@ package br.com.devweb.models;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,14 +23,13 @@ public class Curso
 	@Column(name="Nome",length=120, nullable=false)
 	private String nome;
 	
-	@OneToMany(mappedBy = "curso")
-    private List<Coordenado> coordenadores;
+	@OneToMany(mappedBy = "curso", cascade = CascadeType.ALL)
+    private List<Coordenado> coordenadores = new ArrayList<Coordenado>();;
 	
 	@ManyToMany(mappedBy="cursos")
 	private List<Disciplina> disciplinas;
 	
 	public Curso() {
-		coordenadores = new ArrayList<Coordenado>();
 	}
 
 	public Curso(String nome, List<Coordenado> coordenadores) {

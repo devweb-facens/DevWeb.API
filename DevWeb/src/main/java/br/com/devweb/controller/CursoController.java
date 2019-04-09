@@ -11,9 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.devweb.models.Coordenado;
 import br.com.devweb.models.Curso;
-import br.com.devweb.repository.CoordenadoRepository;
 import br.com.devweb.repository.CursoRepository;
 
 @RestController
@@ -22,8 +20,6 @@ public class CursoController {
 
 	@Autowired
 	private CursoRepository cursoRepository;
-	@Autowired
-	private CoordenadoRepository coordenadoRepository;
 	
 	@GetMapping("/getAll")
 	public ResponseEntity<List<Curso>> getAll(){
@@ -42,15 +38,15 @@ public class CursoController {
 	public ResponseEntity<Curso> save(@RequestBody Curso curso){
 		long cont = cursoRepository.count();
 		
-		cursoRepository.save(curso);
-		
 		/*for (Coordenado c : curso.getCoordenadores()) {
-			if (coordenadoRepository.existsById(c.getId()))
-			{
-				c.setCurso(curso);
-				coordenadoRepository.save(c);
-			}
+			c.setCurso(curso);
 		}*/
+		
+		/*List<Coordenado> l = new ArrayList<Coordenado>();
+		l.add(new Coordenado("nomeTeste","email@teste.com","123","15 213",cursoRepository.findById(id)));
+		cursoRepository.save(new Curso("Curso1NOME",l));*/
+		
+		cursoRepository.save(curso);
 		
 		
 		if(cont<cursoRepository.count()) {

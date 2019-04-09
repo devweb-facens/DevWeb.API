@@ -1,7 +1,9 @@
 package br.com.devweb.models;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -23,7 +25,7 @@ public class Coordenado
 	private String senha;
 	@Column(name="Telefone",length=20, nullable=false)
 	private String telefone;
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "curso_id")
 	private Curso curso;
 	
