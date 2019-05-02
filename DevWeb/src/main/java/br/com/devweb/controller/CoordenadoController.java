@@ -2,7 +2,6 @@ package br.com.devweb.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,45 +11,38 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.devweb.models.Coordenado;
-import br.com.devweb.repository.CoordenadoRepository;
+import br.com.devweb.models.Coordenador;
+import br.com.devweb.services.CoordenadorService;
 
 @RestController
 @RequestMapping("/api/coordenado")
 public class CoordenadoController {
 
-	@Autowired
-	private CoordenadoRepository coordenadoRepository;
+	private CoordenadorService service;
 	
 	@GetMapping("/getAll")
-	public ResponseEntity<List<Coordenado>> getAll(){
-		List<Coordenado> coordenado = coordenadoRepository.findAll();
+	public ResponseEntity<List<Coordenador>> getAll(){
+		List<Coordenador> lista = service.getAllCoordenador();
 		
-		return coordenado!=null ? ResponseEntity.ok(coordenado): ResponseEntity.noContent().build();
+		return lista != null ? ResponseEntity.ok(lista) : ResponseEntity.noContent().build();
 	}
 	
 	@GetMapping("/getOne/{id}")
-	public ResponseEntity<Coordenado> getOne(@PathVariable("id") int id){
-		Coordenado coordenado = coordenadoRepository.findById(id);
-		return coordenado!=null?ResponseEntity.ok(coordenado):ResponseEntity.noContent().build();
+	public ResponseEntity<Coordenador> getOne(@PathVariable("id") int id){
+		Coordenador coord = service.getOneCoordenador(id);
+		return coord != null ? ResponseEntity.ok(coord) : ResponseEntity.noContent().build();
+		
 	}
 	
-	@PostMapping
-	public ResponseEntity<Coordenado> save(@RequestBody Coordenado coordenado){
-		long cont = coordenadoRepository.count();
-		coordenadoRepository.save(coordenado);
-		if(cont<coordenadoRepository.count()) {
-			return ResponseEntity.ok(coordenado);
-		}else {
-			return ResponseEntity.noContent().build();
-		}
+	@PostMapping("/save")
+	public ResponseEntity<Coordenador> save(@RequestBody Coordenador coord){
+		boolean salvo = service.saveCoordenador(coord);
+		return salvo ? ResponseEntity.ok(coord) : ResponseEntity.noContent().build();
 	}
 	
-	@DeleteMapping("delete/{id}")
-	public ResponseEntity<Coordenado> delete(@PathVariable("id") int id){
-		coordenadoRepository.deleteById(id);
-		Coordenado coordenado = coordenadoRepository.findById(id);
-		return coordenado==null? ResponseEntity.ok(coordenado) : ResponseEntity.noContent().build();
+	@DeleteMapping("/delete/{id}")
+	public ResponseEntity<Coordenador> delete(@PathVariable("id") int id){
+		Coordenador coord = service.deleteCoordenador(id);
+		return coord == null ? ResponseEntity.ok(coord) : ResponseEntity.noContent().build();
 	}
-	
 }
