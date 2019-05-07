@@ -15,17 +15,17 @@ public class CoordenadorService {
 	@Autowired
 	private CoordenadoRepository repo;
 	
-	public List<Coordenador> getAllCoordenador(){
+	public List<Coordenador> getAll(){
 		List<Coordenador> coords = repo.findAll();
 		return coords;
 	}
 	
-	public Coordenador getOneCoordenador(int id) {
+	public Coordenador getOne(int id) {
 		Coordenador coord = repo.findById(id);
 		return coord;
 	}
 	
-	public boolean saveCoordenador(Coordenador coord) {
+	public boolean save(Coordenador coord) {
 		long count = repo.count();
 		repo.save(coord);
 		if(count < repo.count()) {
@@ -35,7 +35,7 @@ public class CoordenadorService {
 		}
 	}
 	
-	public Coordenador deleteCoordenador(int id) {
+	public Coordenador delete(int id) {
 		repo.deleteById(id);
 		Coordenador coord = repo.findById(id);
 		return coord;
