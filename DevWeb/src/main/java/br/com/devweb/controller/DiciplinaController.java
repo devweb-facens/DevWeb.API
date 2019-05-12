@@ -1,5 +1,6 @@
 package br.com.devweb.controller;
 
+import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,45 +12,42 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.devweb.models.Disciplina;
-import br.com.devweb.repository.DisciplinaRepository;
+import br.com.devweb.services.DisciplinaService;
 
 @RestController
 @RequestMapping("/api/disciplina")
 public class DiciplinaController {
 
 	@Autowired
-	private DisciplinaRepository disciplinaRepository;
+	private DisciplinaService service;
 	
 	@GetMapping("/getAll")
 	public ResponseEntity<List<Disciplina>> getAll(){
-		List<Disciplina> diciplina = disciplinaRepository.findAll();
-		
-		return diciplina!=null ? ResponseEntity.ok(diciplina): ResponseEntity.noContent().build();
+		List<Disciplina> lista = service.getAll();
+		return lista != null ? ResponseEntity.ok(lista) : ResponseEntity.noContent().build();
 	}
 	
 	@GetMapping("/getOne/{id}")
 	public ResponseEntity<Disciplina> getOne(@PathVariable("id") int id){
-		Disciplina diciplina = disciplinaRepository.findById(id);
-		return diciplina!=null?ResponseEntity.ok(diciplina):ResponseEntity.noContent().build();
+		Disciplina dis = service.getOne(id);
+		return dis != null ? ResponseEntity.ok(dis) : ResponseEntity.noContent().build();
 	}
 	
-	@PostMapping
-	public ResponseEntity<Disciplina> save(@RequestBody Disciplina diciplina){
-		long cont = disciplinaRepository.count();
-		disciplinaRepository.save(diciplina);
-		if(cont<disciplinaRepository.count()) {
-			return ResponseEntity.ok(diciplina);
-		}else {
-			return ResponseEntity.noContent().build();
-		}
+	@PostMapping("/insert")
+	public ResponseEntity<Disciplina> insert(@RequestBody Disciplina dis){
+		dis = service.insert(dis);
+		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(dis.getId()).toUri();
+		return dis.getId() != null ? ResponseEntity.created(uri).build() : ResponseEntity.noContent().build();
 	}
 	
-	@DeleteMapping("delete/{id}")
+	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<Disciplina> delete(@PathVariable("id") int id){
-		disciplinaRepository.deleteById(id);
-		Disciplina diciplina = disciplinaRepository.findById(id);
-		return diciplina==null? ResponseEntity.ok(diciplina) : ResponseEntity.noContent().build();
+		Disciplina dis = service.delete(id);
+		return dis == null ? ResponseEntity.ok(dis) : ResponseEntity.noContent().build();
+		
 	}
+	
 }

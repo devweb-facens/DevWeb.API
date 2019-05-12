@@ -9,7 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class Coordenado 
+public class Coordenador
 {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -27,17 +27,6 @@ public class Coordenado
     @JoinColumn(name = "curso_id")
 	private Curso curso;
 	
-	public Coordenado() {
-	}
-
-	public Coordenado(String nome, String email, String senha, String telefone, Curso curso) {
-		
-		this.nome = nome;
-		this.email = email;
-		this.senha = senha;
-		this.telefone = telefone;
-		this.curso = curso;
-	}
 	
 	public Integer getId() {
 		return id;

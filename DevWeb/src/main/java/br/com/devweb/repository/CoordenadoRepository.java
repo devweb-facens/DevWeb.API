@@ -4,11 +4,11 @@ import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
 
-import br.com.devweb.models.Coordenado;
+import br.com.devweb.models.Coordenador;
 
-public interface CoordenadoRepository extends CrudRepository<Coordenado, Integer>{
+public interface CoordenadoRepository extends CrudRepository<Coordenador, Integer>{
 	
-	List<Coordenado> findAll();
-	Coordenado findById(int id);
+	List<Coordenador> findAll();
+	Coordenador findById(int id);
 }
 

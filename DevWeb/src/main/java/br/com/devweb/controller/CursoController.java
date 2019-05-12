@@ -1,6 +1,8 @@
 package br.com.devweb.controller;
 
+import java.net.URI;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -10,45 +12,41 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import br.com.devweb.models.Curso;
-import br.com.devweb.repository.CursoRepository;
+import br.com.devweb.services.CursoService;
 
 @RestController
 @RequestMapping("/api/curso")
 public class CursoController {
 
 	@Autowired
-	private CursoRepository cursoRepository;
+	private CursoService service;
 	
 	@GetMapping("/getAll")
 	public ResponseEntity<List<Curso>> getAll(){
-		List<Curso> curso = cursoRepository.findAll();
-		
-		return curso!=null ? ResponseEntity.ok(curso): ResponseEntity.noContent().build();
+		List<Curso> cursos = service.getAll();
+		return cursos != null ? ResponseEntity.ok(cursos) : ResponseEntity.noContent().build();
 	}
 	
 	@GetMapping("/getOne/{id}")
-	public ResponseEntity<Curso> getOne(@PathVariable("id") int id){
-		Curso curso = cursoRepository.findById(id);
-		return curso!=null?ResponseEntity.ok(curso):ResponseEntity.noContent().build();
+	public ResponseEntity<Curso> getOne(@PathVariable("id") int id) {
+		Curso curso = service.getOne(id);
+		return curso != null ? ResponseEntity.ok(curso) : ResponseEntity.noContent().build();
 	}
 	
-	@PostMapping
+	@PostMapping("/insert")
 	public ResponseEntity<Curso> save(@RequestBody Curso curso){
-		long cont = cursoRepository.count();
-		cursoRepository.save(curso);
-		if(cont<cursoRepository.count()) {
-			return ResponseEntity.ok(curso);
-		}else {
-			return ResponseEntity.noContent().build();
-		}
+		 curso = service.insert(curso);
+		 URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(curso.getId()).toUri();
+		 return curso.getId() != null ? ResponseEntity.created(uri).build() : ResponseEntity.noContent().build();
 	}
 	
-	@DeleteMapping("delete/{id}")
+	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<Curso> delete(@PathVariable("id") int id){
-		cursoRepository.deleteById(id);
-		Curso curso = cursoRepository.findById(id);
-		return curso==null? ResponseEntity.ok(curso) : ResponseEntity.noContent().build();
+		Curso curso = service.delete(id);
+		return curso == null ? ResponseEntity.ok(curso) : ResponseEntity.noContent().build();
 	}
+	
 }

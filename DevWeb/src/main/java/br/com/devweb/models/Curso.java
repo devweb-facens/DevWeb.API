@@ -20,12 +20,12 @@ public class Curso
 	@Column(name="Nome",length=120, nullable=false)
 	private String nome;
 	@OneToMany(mappedBy = "curso")
-    private List<Coordenado> coordenadores;
+    private List<Coordenador> coordenadores;
 	
 	public Curso() {
 	}
 
-	public Curso(String nome, List<Coordenado> coordenadores) {
+	public Curso(String nome, List<Coordenador> coordenadores) {
 		this.nome = nome;
 		this.coordenadores = coordenadores;
 	}
@@ -42,10 +42,10 @@ public class Curso
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public List<Coordenado> getCoordenadores() {
+	public List<Coordenador> getCoordenadores() {
 		return coordenadores;
 	}
-	public void setCoordenadores(List<Coordenado> coordenadores) {
+	public void setCoordenadores(List<Coordenador> coordenadores) {
 		this.coordenadores = coordenadores;
 	}
 	

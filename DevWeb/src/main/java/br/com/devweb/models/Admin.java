@@ -10,7 +10,7 @@ import javax.persistence.Id;
 public class Admin 
 {
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	
 	@Column(name="Nome",length=120, nullable=false)
