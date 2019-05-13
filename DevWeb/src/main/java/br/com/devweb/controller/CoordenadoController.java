@@ -18,7 +18,7 @@ import br.com.devweb.services.CoordenadorService;
 
 
 @RestController
-@RequestMapping("/api/coordenado")
+@RequestMapping("/api/coordenador")
 public class CoordenadoController {
 
 	@Autowired

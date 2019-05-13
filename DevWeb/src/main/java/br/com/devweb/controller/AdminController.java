@@ -36,11 +36,14 @@ public class AdminController {
 		return admin!=null ? ResponseEntity.ok(admin):ResponseEntity.noContent().build();
 	}
 	
-	@PostMapping("/save")
+	@PostMapping("/insert")
 	public ResponseEntity<Admin> save(@RequestBody Admin admin){
+		 
 		admin = service.insert(admin);
+		
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(admin.getId()).toUri();
 		return admin.getId() != null ? ResponseEntity.created(uri).build() : ResponseEntity.noContent().build();
+	
 	}
 	
 	@DeleteMapping("/delete/{id}")

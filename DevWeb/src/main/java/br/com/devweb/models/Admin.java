@@ -6,6 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Admin 
 {
@@ -17,12 +19,18 @@ public class Admin
 	private String nome;
 	@Column(name="Email",length=80, nullable=false)
 	private String email;
+	@JsonIgnore
 	@Column(name="Senha",length=30, nullable=false)
 	private String senha;
 	@Column(name="Telefone",length=20, nullable=false)
 	private String telefone;
 	
-	
+	public Admin(String nome, String email, String senha, String telefone) {
+		this.nome = nome;
+		this.email = email;
+		this.senha = senha;
+		this.telefone = telefone;
+	}
 
 	public Integer getId() {
 		return id;
