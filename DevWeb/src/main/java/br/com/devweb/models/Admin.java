@@ -17,7 +17,7 @@ public class Admin
 	private String nome;
 	@Column(name="Email",length=80, nullable=false)
 	private String email;
-	@Column(name="Senha",length=30, nullable=false)
+	@Column(name="Senha",length=300, nullable=false)
 	private String senha;
 	@Column(name="Telefone",length=20, nullable=false)
 	private String telefone;
