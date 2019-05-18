@@ -31,9 +31,14 @@ public class AdminService {
 	
 	public Admin insert(Admin admin) {
 		admin.setId(null);
-		admin.setSenha(pe.encode(admin.getSenha()));
-		
-		return repo.save(admin);
+		Admin ad = repo.findByEmail(admin.getEmail());
+		if(ad == null) {
+			admin.setSenha(pe.encode(admin.getSenha()));
+			
+			return repo.save(admin);
+		}
+		return null;
+	
 	}
 	
 	public Admin delete(int id) {

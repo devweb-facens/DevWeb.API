@@ -1,10 +1,20 @@
 package br.com.devweb.models;
 
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
+import br.com.devweb.enums.Perfil;
 
 @Entity
 public class Admin 
@@ -22,8 +32,14 @@ public class Admin
 	@Column(name="Telefone",length=20, nullable=false)
 	private String telefone;
 	
+	@ElementCollection(fetch = FetchType.EAGER)
+	@CollectionTable(name="PERFIS")
+	private Set<Integer> perfis = new HashSet<>();
 	
 
+	public Admin() {
+		addPerfil(Perfil.ADMIN);
+	}
 	public Integer getId() {
 		return id;
 	}
@@ -53,6 +69,14 @@ public class Admin
 	}
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
+	}
+	
+	public Set<Perfil> getPerfis(){
+		return perfis.stream().map(x -> Perfil.toEnum(x)).collect(Collectors.toSet());
+	}
+	
+	public void addPerfil(Perfil perfil) {
+		perfis.add(perfil.getCod());
 	}
 	
 	
